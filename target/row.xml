@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--namespance 表明是在layui的命名空间下-->
+<rows namespace="layui">
+    
+    <row ref="edit" title="用户名" id="0"></row>
+    <row ref="edit" title="密码" id="1"></row>
+    <row ref="button" type="center" title="登陆" id="2"></row>
+
+    <!-- $${child} 表示可递归嵌入 -->
+    <row ref="div" id="3">
+        <row ref="div"></row>
+    </row>
+
+    <!-- 附加 -->
+    <append>
+    </append>
+
+    <!-- 变量 -->
+    <var>
+        <a>0</a>
+    </var>
+
+    <!--判断-->
+    <if exp="val==0">
+
+    </if>
+    <!-- 循环[,] -->
+    <for exp="1To10" var="i">
+        <p>${i}</p>
+    </for>
+</rows>

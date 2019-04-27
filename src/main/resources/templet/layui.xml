@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templet name="layui-templet">
+    <model name="button">
+        <properties>
+            <property name="title" default=""></property>
+        </properties>
+
+        <source-text>
+            <button class="layui-btn layui-btn-primary">${title}</button>
+        </source-text>
+    </model>
+
+    <model name="div">
+        <properties>
+            <property name="title" default=""></property>
+        </properties>
+
+        <source-text>
+            <div class="layui-btn layui-btn-primary">$${}</div>
+        </source-text>
+    </model>
+
+    <!-- $${child} 表示可递归嵌入 -->
+</templet>
