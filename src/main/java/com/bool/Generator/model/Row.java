@@ -1,5 +1,6 @@
 package com.bool.Generator.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import net.sf.json.JSONArray;
@@ -7,20 +8,19 @@ import net.sf.json.JSONArray;
 //行文件
 public class Row{
     private int id;
-    private String name;//row名称
-    private String namespace;
     private String ref;//引用
     private JSONArray properties;
+    private List<Row> childRow;
 
 
     public Row() {
     }
 
-    public Row(int id, String namespace, String ref, JSONArray properties) {
+    public Row(int id, String ref, JSONArray properties, List<Row> childRow) {
         this.id = id;
-        this.namespace = namespace;
         this.ref = ref;
         this.properties = properties;
+        this.childRow = childRow;
     }
 
     public int getId() {
@@ -29,14 +29,6 @@ public class Row{
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getNamespace() {
-        return this.namespace;
-    }
-
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
     }
 
     public String getRef() {
@@ -55,13 +47,16 @@ public class Row{
         this.properties = properties;
     }
 
-    public Row id(int id) {
-        this.id = id;
-        return this;
+    public List<Row> getChildRow() {
+        return this.childRow;
     }
 
-    public Row namespace(String namespace) {
-        this.namespace = namespace;
+    public void setChildRow(List<Row> childRow) {
+        this.childRow = childRow;
+    }
+
+    public Row id(int id) {
+        this.id = id;
         return this;
     }
 
@@ -75,6 +70,11 @@ public class Row{
         return this;
     }
 
+    public Row childRow(List<Row> childRow) {
+        this.childRow = childRow;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -83,22 +83,23 @@ public class Row{
             return false;
         }
         Row row = (Row) o;
-        return id == row.id && Objects.equals(namespace, row.namespace) && Objects.equals(ref, row.ref) && Objects.equals(properties, row.properties);
+        return id == row.id && Objects.equals(ref, row.ref) && Objects.equals(properties, row.properties) && Objects.equals(childRow, row.childRow);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, namespace, ref, properties);
+        return Objects.hash(id, ref, properties, childRow);
     }
 
     @Override
     public String toString() {
         return "{" +
             " id='" + getId() + "'" +
-            ", namespace='" + getNamespace() + "'" +
             ", ref='" + getRef() + "'" +
             ", properties='" + getProperties() + "'" +
+            ", childRow='" + getChildRow() + "'" +
             "}";
     }
+
 
 }

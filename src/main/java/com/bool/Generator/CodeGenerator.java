@@ -26,14 +26,14 @@ public class CodeGenerator implements ICodeGenerator{
      * String name
      * List<Model> model list
      */
-    private static Map<String, List<Model>> modelsMap = new HashMap<>();
+    private static Map<String, List<Object>> modelsMap = new HashMap<>();
 
     // 行文件map
     /**
      * String namespace
      * List<Row> row list
      */
-    private static Map<String, List<Row>> rowsMaps = new HashMap<>();
+    private static Map<String, List<Object>> rowsMaps = new HashMap<>();
 
     // 装载所有模型文件
     /**
@@ -52,7 +52,7 @@ public class CodeGenerator implements ICodeGenerator{
         List<Model> ModelList;
         System.out.println();
         for (String xmlPath : xmlPathList) {
-            modelsMap.put(getTempletName(xmlPath),loadTemplet(xmlPath));
+            modelsMap.put(getTempletName(xmlPath),loadModelList(xmlPath));
             System.out.println("load -> "+xmlPath);
         }
 
@@ -71,9 +71,9 @@ public class CodeGenerator implements ICodeGenerator{
         return element.attribute("name").getValue();
     }
     // 装载模型文件
-    private List<Model> loadTemplet(String path) throws Exception
+    private List<Object> loadModelList(String path) throws Exception
     {
-        List<Model> modelList = new ArrayList();
+        List<Object> modelList = new ArrayList();
         File file = new File(path);
         if(!file.exists())//如果找不到模型文件
             throw new Exception("model file not found!");
@@ -137,18 +137,102 @@ public class CodeGenerator implements ICodeGenerator{
 
         return model;
     }
-    //装载行文件
-    private void generateToFile(String templetXmlFilePath,
-                               String destFilePath)
-    {
-        
-    }
 
     /**
      * 加载所有行文件
      */
     @Override
     public void loadAllRows(String path) throws Exception {
+        File file = new File(path);
+        if (!file.isDirectory())// 如果不是目录
+            throw new Exception("path is not a directory!!");
+
+        List<String> xmlPathList = CommonUtil.getAllFilePathsByPath(path);
+        List<Model> ModelList;
+        System.out.println();
+        for (String xmlPath : xmlPathList) {
+            modelsMap.put(getTempletName(xmlPath),loadRowslList(xmlPath));
+            System.out.println("load -> "+xmlPath);
+        }
+
+
+        System.out.println("装载所有模型成功!");
+        System.out.println();
+    }
+
+    
+
+ // 装载行文件
+ private List<Object> loadRowslList(String path) throws Exception
+ {
+     List<Object> modelList = new ArrayList();
+     File file = new File(path);
+     if(!file.exists())//如果找不到模型文件
+         throw new Exception("model file not found!");
+     
+     Document doc = new SAXReader().read(file);
+     Element element = doc.getRootElement();
+     List<Element> list = element.elements();
+     
+     for(Element e:list)
+     {
+
+        modelList.add(loadRow(e));//装载row的组件(row、append、var、if)
+     }
+     
+     return modelList;
+ }
+
+ //加载行文件，包括:row、append、var、if
+ private Row loadRow(Element e)
+ {
+     Row row = null;
+
+    if("row".equals(e.getName()))//row要考虑递归结构
+    {
+        List<Attribute> listAttr;
+        int i;
+        JSONArray jsonattrProperties;
+        JSONObject jsonProperty;
+        jsonattrProperties = new JSONArray();
+        listAttr = e.attributes();
+
+        row = new Row();
+
+        for(Attribute attr : listAttr)//设置row的属性
+        {
+            if("id".equals(attr.getName()))//设置row的id
+            {
+                row.setId(Integer.parseInt(attr.getStringValue()));
+            }else if("ref".equals(attr.getName()))//设置row的ref
+            {
+                row.setRef(attr.getStringValue());
+            }else
+            {
+                jsonProperty = new JSONObject();
+                jsonProperty.put(attr.getName(), attr.getStringValue());
+                jsonattrProperties.add(jsonProperty);
+            }
+        }
+        row.setProperties(jsonattrProperties);
+        
+
+    }else if("append".equals(e.getName()))
+    {
+        row = new Row();
+
+    }else if("var".equals(e.getName()))
+    {
+        row = new Row();
+
+    }else if("if".equals(e.getName()))
+    {
+        row = new Row();
 
     }
+
+    return row;
+ }
 }
+
+
