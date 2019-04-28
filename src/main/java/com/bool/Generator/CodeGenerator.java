@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bool.Generator.interfaces.ICodeGenerator;
 import com.bool.Generator.model.Model;
 import com.bool.Generator.model.Row;
 import com.bool.Generator.utils.*;
@@ -19,11 +20,19 @@ import org.dom4j.io.SAXReader;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class CodeGenerator {
+public class CodeGenerator implements ICodeGenerator{
     // 模型文件map
+    /**
+     * String name
+     * List<Model> model list
+     */
     private static Map<String, List<Model>> modelsMap = new HashMap<>();
 
     // 行文件map
+    /**
+     * String namespace
+     * List<Row> row list
+     */
     private static Map<String, List<Row>> rowsMaps = new HashMap<>();
 
     // 装载所有模型文件
@@ -33,6 +42,7 @@ public class CodeGenerator {
      * @param path
      * @throws Exception
      */
+    @Override
     public void loadAllTemplet(String path) throws Exception {
         File file = new File(path);
         if (!file.isDirectory())// 如果不是目录
@@ -45,7 +55,7 @@ public class CodeGenerator {
             modelsMap.put(getTempletName(xmlPath),loadTemplet(xmlPath));
             System.out.println("load -> "+xmlPath);
         }
-        
+
 
         System.out.println("装载所有模型成功!");
         System.out.println();
@@ -131,6 +141,14 @@ public class CodeGenerator {
     private void generateToFile(String templetXmlFilePath,
                                String destFilePath)
     {
+
+    }
+
+    /**
+     * 加载所有行文件
+     */
+    @Override
+    public void loadAllRows(String path) throws Exception {
 
     }
 }
