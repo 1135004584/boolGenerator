@@ -45,6 +45,7 @@ public class CodeGenerator {
             modelsMap.put(getTempletName(xmlPath),loadTemplet(xmlPath));
             System.out.println("load -> "+xmlPath);
         }
+        
 
         System.out.println("装载所有模型成功!");
         System.out.println();

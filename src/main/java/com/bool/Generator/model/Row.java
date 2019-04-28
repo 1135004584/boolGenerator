@@ -7,6 +7,7 @@ import net.sf.json.JSONArray;
 //行文件
 public class Row{
     private int id;
+    private String namespace;
     private String ref;//引用
     private JSONArray properties;
 
@@ -14,8 +15,9 @@ public class Row{
     public Row() {
     }
 
-    public Row(int id, String ref, JSONArray properties) {
+    public Row(int id, String namespace, String ref, JSONArray properties) {
         this.id = id;
+        this.namespace = namespace;
         this.ref = ref;
         this.properties = properties;
     }
@@ -26,6 +28,14 @@ public class Row{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNamespace() {
+        return this.namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
     }
 
     public String getRef() {
@@ -49,6 +59,11 @@ public class Row{
         return this;
     }
 
+    public Row namespace(String namespace) {
+        this.namespace = namespace;
+        return this;
+    }
+
     public Row ref(String ref) {
         this.ref = ref;
         return this;
@@ -67,22 +82,22 @@ public class Row{
             return false;
         }
         Row row = (Row) o;
-        return id == row.id && Objects.equals(ref, row.ref) && Objects.equals(properties, row.properties);
+        return id == row.id && Objects.equals(namespace, row.namespace) && Objects.equals(ref, row.ref) && Objects.equals(properties, row.properties);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ref, properties);
+        return Objects.hash(id, namespace, ref, properties);
     }
 
     @Override
     public String toString() {
         return "{" +
             " id='" + getId() + "'" +
+            ", namespace='" + getNamespace() + "'" +
             ", ref='" + getRef() + "'" +
             ", properties='" + getProperties() + "'" +
             "}";
     }
-
 
 }
