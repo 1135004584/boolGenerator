@@ -7,23 +7,62 @@ import java.util.List;
 import java.util.Map;
 
 import com.bool.Generator.model.Model;
+import com.bool.Generator.model.Row;
+import com.bool.Generator.utils.*;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.junit.Test;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class CodeGenerator {
-    //模型文件列表
-    private static List<Model> modelList = new ArrayList();
+    // 模型文件map
+    private static Map<String, List<Model>> modelsMap = new HashMap<>();
 
-    //装载模型文件
-    public void loadTemplet(String path) throws Exception
+    // 行文件map
+    private static Map<String, List<Row>> rowsMaps = new HashMap<>();
+
+    // 装载所有模型文件
+    /**
+     * 会对path目录下的所有.xml进行装载,可以递归搜索
+     * 
+     * @param path
+     * @throws Exception
+     */
+    public void loadAllTemplet(String path) throws Exception {
+        File file = new File(path);
+        if (!file.isDirectory())// 如果不是目录
+            throw new Exception("path is not a directory!!");
+
+        List<String> xmlPathList = CommonUtil.getAllFilePathsByPath(path);
+        List<Model> ModelList;
+        System.out.println();
+        for (String xmlPath : xmlPathList) {
+            modelsMap.put(getTempletName(xmlPath),loadTemplet(xmlPath));
+            System.out.println("load -> "+xmlPath);
+        }
+
+        System.out.println("装载所有模型成功!");
+        System.out.println();
+
+    }
+
+    // 获取model名称
+    private String getTempletName(String path) throws DocumentException
     {
+        File file = new File(path);
+        Document doc = new SAXReader().read(file);
+        Element element = doc.getRootElement();
+        return element.attribute("name").getValue();
+    }
+    // 装载模型文件
+    private List<Model> loadTemplet(String path) throws Exception
+    {
+        List<Model> modelList = new ArrayList();
         File file = new File(path);
         if(!file.exists())//如果找不到模型文件
             throw new Exception("model file not found!");
@@ -37,17 +76,20 @@ public class CodeGenerator {
         {
             if("model".equals(e.getName()))//如果该元素是model
             {
-                loadModel(e);//装载标记为model的组件
+                modelList.add(loadModel(e));//装载标记为model的组件
             }
         }
         
+        return modelList;
     }
  
     /**
      * 加载标记为model的组件
+     * 
      * @param modelList
+     * @return
      */
-    private void loadModel(Element ele)
+    private Model loadModel(Element ele)
     {
         Model model = new Model();
         List<Attribute> attritube = ele.attributes();
@@ -81,10 +123,11 @@ public class CodeGenerator {
         //获取源文本
         Element eleSource = ele.element("source-text");
         model.setSource(eleSource.getStringValue());
-        //装载进model列表
-        modelList.add(model);
+
+        return model;
     }
-    public void generateToFile(String templetXmlFilePath,
+    //装载行文件
+    private void generateToFile(String templetXmlFilePath,
                                String destFilePath)
     {
 
