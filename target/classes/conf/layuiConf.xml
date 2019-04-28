@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config name="layui-config">
+    <outputRow><!--输出row name列表-->
+        <page rowsRef="layui-login"></page>
+        <outputPath>output</outputPath>
+    </outputRow>
+    
+    
+</config>

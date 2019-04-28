@@ -7,6 +7,7 @@ import net.sf.json.JSONArray;
 //行文件
 public class Row{
     private int id;
+    private String name;//row名称
     private String namespace;
     private String ref;//引用
     private JSONArray properties;

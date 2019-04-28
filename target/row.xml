@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--namespance 表明是在layui的命名空间下-->
-<rows namespace="layui" name="layui-login">
+<rows namespace="layui">
     
     <row ref="edit" title="用户名" id="0"></row>
     <row ref="edit" title="密码" id="1"></row>

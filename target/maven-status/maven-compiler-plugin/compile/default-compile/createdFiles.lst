@@ -3,3 +3,4 @@ com\bool\Generator\utils\CommonUtil.class
 com\bool\Generator\model\Model.class
 com\bool\Generator\CodeGenerator.class
 com\bool\Generator\Main.class
+com\bool\Generator\interfaces\ICodeGenerator.class
