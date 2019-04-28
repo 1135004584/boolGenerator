@@ -215,7 +215,19 @@ public class CodeGenerator implements ICodeGenerator{
             }
         }
         row.setProperties(jsonattrProperties);
-        
+
+
+        //考虑多层嵌套结构
+
+        List<Element> listEle = e.elements("row");
+        List<Row> listRow;
+        Row _row;
+        while(listEle.size() != 0)
+        {
+            
+            
+        }
+
 
     }else if("append".equals(e.getName()))
     {
