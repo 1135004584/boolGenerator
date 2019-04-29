@@ -1,4 +1,4 @@
-package com.bool.Generator.interfaces;
+package com.bool.interfaces;
 
 public interface ICodeGenerator{
     /**

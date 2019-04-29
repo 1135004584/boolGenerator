@@ -1,4 +1,4 @@
-package com.bool.Generator.model;
+package com.bool.model;
 
 import java.util.Map;
 import java.util.Objects;

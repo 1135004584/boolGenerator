@@ -1,4 +1,4 @@
-package com.bool.Generator.utils;
+package com.bool.utils;
 
 import java.io.File;
 import java.io.FileFilter;
