@@ -66,9 +66,10 @@ public class CodeGenerator implements ICodeGenerator{
         List<Model> ModelList;
         RowController rowController = new RowController();
         for (String xmlPath : xmlPathList) {
-            modelsMap.put(getTempletName(xmlPath),rowController.loadRowslList(xmlPath));
+            rowsMaps.put(getTempletName(xmlPath),rowController.loadRowslList(xmlPath));
             System.out.println("load -> "+xmlPath);
         }
+        System.out.println(modelsMap.size());
     }
 
 
@@ -125,4 +126,14 @@ public class CodeGenerator implements ICodeGenerator{
 
     }
  
+    public void test()
+    {
+        Set<String> rowsSet = rowsMaps.keySet();
+        System.out.println("size:"+rowsMaps.size());
+        Iterator iter = rowsSet.iterator();
+        while(iter.hasNext())
+        {
+            System.out.println("key:"+iter.next()+",value:"+rowsMaps.get(iter.next().toString()));
+        }
+    }
 }
