@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<output>
+<output suffix="html">
     <page rowsRef="layui-login"></page>
     <outputPath>output</outputPath>
 </output>

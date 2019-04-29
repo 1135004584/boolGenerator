@@ -1,5 +1,6 @@
 com\bool\interfaces\ICodeGenerator.class
-com\bool\Generator\Main.class
+com\bool\model\CompileModel.class
+com\bool\Main.class
 com\bool\Generator\CommonData.class
 com\bool\utils\CommonUtil.class
 com\bool\Generator\ModelController.class
@@ -7,5 +8,6 @@ com\bool\model\Model.class
 com\bool\Generator\OutputController.class
 com\bool\Generator\RowController.class
 com\bool\model\Row.class
+com\bool\Generator\CompileController.class
 com\bool\Generator\CodeGenerator.class
 com\bool\model\Output.class

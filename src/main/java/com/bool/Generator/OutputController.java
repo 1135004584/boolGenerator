@@ -28,6 +28,7 @@ public class OutputController
         }
         output.setRowsRef(rowsRef);
         output.setOutputPath(e.getStringValue());
+        output.setSuffix(e.attributeValue("suffix"));
         return output;
     }
 

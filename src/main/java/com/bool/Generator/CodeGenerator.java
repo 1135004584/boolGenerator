@@ -3,10 +3,13 @@ package com.bool.Generator;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.bool.interfaces.ICodeGenerator;
+import com.bool.model.CompileModel;
 import com.bool.model.Model;
 import com.bool.model.Output;
 import com.bool.model.Row;
@@ -23,6 +26,11 @@ import net.sf.json.JSONObject;
 import com.bool.Generator.CommonData;
 public class CodeGenerator implements ICodeGenerator{
   
+    public static Map<String, List<Object>> modelsMap = CommonData.modelsMap;
+    public static Map<String, List<Object>> rowsMaps = CommonData.rowsMaps;
+    public static List<Output> outputsList = CommonData.outputsList;
+    public static List<CompileModel> compileList = CommonData.compileList;
+
     // 装载所有模型文件
     /**
      * 会对path目录下的所有.xml进行装载,可以递归搜索
@@ -40,7 +48,7 @@ public class CodeGenerator implements ICodeGenerator{
         List<Model> ModelList;
         ModelController modelController = new ModelController();
         for (String xmlPath : xmlPathList) {
-            CommonData.modelsMap.put(getTempletName(xmlPath),modelController.loadModelList(xmlPath));
+            modelsMap.put(getTempletName(xmlPath),modelController.loadModelList(xmlPath));
             System.out.println("load -> "+xmlPath);
         }
     }
@@ -58,12 +66,10 @@ public class CodeGenerator implements ICodeGenerator{
         List<Model> ModelList;
         RowController rowController = new RowController();
         for (String xmlPath : xmlPathList) {
-            CommonData.modelsMap.put(getTempletName(xmlPath),rowController.loadRowslList(xmlPath));
+            modelsMap.put(getTempletName(xmlPath),rowController.loadRowslList(xmlPath));
             System.out.println("load -> "+xmlPath);
         }
     }
-
-    
 
 
     /**
@@ -79,12 +85,12 @@ public class CodeGenerator implements ICodeGenerator{
         List<Model> ModelList;
         OutputController outputController = new OutputController();
         for (String xmlPath : xmlPathList) {
-            CommonData.outputsList.addAll(outputController.loadOutputList(xmlPath));
+            outputsList.addAll(outputController.loadOutputList(xmlPath));
             System.out.println("load -> "+xmlPath);
         }
     }
 
- // 获取model名称
+    //获取model名称
     private String getTempletName(String path) throws DocumentException
     {
         File file = new File(path);
@@ -93,6 +99,26 @@ public class CodeGenerator implements ICodeGenerator{
         return element.attribute("name").getValue();
     }
 
+    //开始编译所有
+    public void startCompileAll()
+    {
+        Set<String> keyset = rowsMaps.keySet();
+        Iterator<String> iter = keyset.iterator();
+        CompileModel compileModel;
 
+        while(iter.hasNext())
+        {
+            compileModel = new CompileModel();
+            compileModel.setFileName(fileName);
+            rowsMaps.get(iter.next());
+            
+        }
+    }
+
+    //开始生成所有文件
+    public void startGenerateAllFile()
+    {
+
+    }
  
 }

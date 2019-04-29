@@ -83,7 +83,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.bool.Generator.Main</mainClass>
+                            <mainClass>com.bool.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

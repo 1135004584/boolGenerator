@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bool.model.CompileModel;
 import com.bool.model.Output;
 
 public class CommonData {
@@ -22,8 +23,10 @@ public class CommonData {
      */
     public static Map<String, List<Object>> rowsMaps = new HashMap<>();
 
-
+    //输出文件集合
     public static List<Output> outputsList = new ArrayList<>();
     
+    //生成模型集合
+    public static List<CompileModel> compileList = new ArrayList<>();
     
 }
