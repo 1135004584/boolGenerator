@@ -105,20 +105,20 @@ public class CodeGenerator implements ICodeGenerator{
         Set<String> keyset = rowsMaps.keySet();
         Iterator<String> iter = keyset.iterator();
         CompileModel compileModel;
+        CompileController compileController = new CompileController();
 
         while(iter.hasNext())
         {
-            compileModel = new CompileModel();
-            compileModel.setFileName(fileName);
-            rowsMaps.get(iter.next());
-            
+            compileModel = compileController.Compile(iter.next(),
+                                                rowsMaps.get(iter.next()));
+            compileList.add(compileModel);
         }
     }
 
     //开始生成所有文件
     public void startGenerateAllFile()
     {
-
+        
     }
  
 }
