@@ -26,6 +26,7 @@ public class CompileController {
         CompileModel compileModel = new CompileModel();
         Row row;
         StringBuffer ret = new StringBuffer();
+        
         for(int i=0;i<rowsList.size();i++)
         {
             row = (Row)rowsList.get(i);
@@ -49,16 +50,45 @@ public class CompileController {
 
         compileModel.fileName(name+getSuffixByOutput(name));
         compileModel.setContent(ret.toString());
-
+        compileModel.setOutputPath(getOutputPath(name));
         return compileModel;
     }
 
-    private String getSuffixByOutput(String name) {
-        
+
+    private String getOutputPath(String ref) {
+        for(Output output:outputsList)
+        {
+            
+            List<String> refList = output.getRowsRef();
+            for(String _ref:refList)
+            {
+                if(ref.equals(_ref))
+                {
+                    return output.getOutputPath();
+                }
+            }
+        }
         return null;
     }
 
+    private String getSuffixByOutput(String ref) {
+        for(Output output:outputsList)
+        {
+            
+            List<String> refList = output.getRowsRef();
+            for(String _ref:refList)
+            {
+                if(ref.equals(_ref))
+                {
+                    return output.getSuffix();
+                }
+            }
+        }
+        return "";
+    }
+
     private String getRetByFor(Row row) {
+
         return null;
     }
 
