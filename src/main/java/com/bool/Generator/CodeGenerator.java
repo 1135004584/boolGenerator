@@ -26,8 +26,8 @@ import net.sf.json.JSONObject;
 import com.bool.Generator.CommonData;
 public class CodeGenerator implements ICodeGenerator{
   
-    public static Map<String, List<Object>> modelsMap = CommonData.modelsMap;
-    public static Map<String, List<Object>> rowsMaps = CommonData.rowsMaps;
+    public static Map<String, List<Model>> modelsMap = CommonData.modelsMap;
+    public static Map<String, List<Row>> rowsMaps = CommonData.rowsMaps;
     public static List<Output> outputsList = CommonData.outputsList;
     public static List<CompileModel> compileList = CommonData.compileList;
 
@@ -69,7 +69,6 @@ public class CodeGenerator implements ICodeGenerator{
             rowsMaps.put(getTempletName(xmlPath),rowController.loadRowslList(xmlPath));
             System.out.println("load -> "+xmlPath);
         }
-        System.out.println(modelsMap.size());
     }
 
 
@@ -129,11 +128,10 @@ public class CodeGenerator implements ICodeGenerator{
     public void test()
     {
         Set<String> rowsSet = rowsMaps.keySet();
-        System.out.println("size:"+rowsMaps.size());
-        Iterator iter = rowsSet.iterator();
+        Iterator iter = rowsSet.iterator();//+",value:"+rowsMaps.get(iter.next().toString())
         while(iter.hasNext())
         {
-            System.out.println("key:"+iter.next()+",value:"+rowsMaps.get(iter.next().toString()));
+            System.out.println("key:"+iter.next());
         }
     }
 }

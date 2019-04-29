@@ -20,9 +20,9 @@ public class ModelController
 
    
     // 装载模型文件
-    public List<Object> loadModelList(String path) throws Exception
+    public List<Model> loadModelList(String path) throws Exception
     {
-        List<Object> modelList = new ArrayList();
+        List<Model> modelList = new ArrayList();
         File file = new File(path);
         if(!file.exists())//如果找不到模型文件
             throw new Exception("model file not found!");

@@ -19,9 +19,9 @@ public class RowController
 {
     
  // 装载行文件
- public List<Object> loadRowslList(String path) throws Exception
+ public List<Row> loadRowslList(String path) throws Exception
  {
-     List<Object> modelList = new ArrayList();
+     List<Row> modelList = new ArrayList();
      File file = new File(path);
      if(!file.exists())//如果找不到模型文件
          throw new Exception("model file not found!");

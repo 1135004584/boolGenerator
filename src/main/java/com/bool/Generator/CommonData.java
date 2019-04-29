@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.bool.model.CompileModel;
+import com.bool.model.Model;
 import com.bool.model.Output;
+import com.bool.model.Row;
 
 public class CommonData {
 // 模型文件map
@@ -14,14 +16,14 @@ public class CommonData {
      * String name
      * List<Model> model list
      */
-    public static Map<String, List<Object>> modelsMap = new HashMap<>();
+    public static Map<String, List<Model>> modelsMap = new HashMap<>();
 
     // 行文件map
     /**
      * String namespace
      * List<Row> row list
      */
-    public static Map<String, List<Object>> rowsMaps = new HashMap<>();
+    public static Map<String, List<Row>> rowsMaps = new HashMap<>();
 
     //输出文件集合
     public static List<Output> outputsList = new ArrayList<>();
