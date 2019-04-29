@@ -94,14 +94,9 @@ public class RowController
     JSONObject property;
     for(Attribute attr:listAttr)
     {
-        if("id".equals(attr.getName()))
-        {
-            row.setId(Integer.parseInt(attr.getValue()));
-        }else{
-            property = new JSONObject();
-            property.put(e.getName(), e.getStringValue());
-            properties.add(property);
-        }
+        property = new JSONObject();
+        property.put(e.getName(), e.getStringValue());
+        properties.add(property);
     }
     row.setProperties(properties);//装载属性
 
@@ -118,14 +113,11 @@ public class RowController
             properties = new JSONArray();
             for(Attribute attr:listAttr)
             {
-                if("id".equals(attr.getName()))
-                {
-                    _row.setId(Integer.parseInt(attr.getValue()));
-                }else{
-                    property = new JSONObject();
-                    property.put(ele.getName(), ele.getStringValue());
-                    properties.add(property);
-                }
+                
+                property = new JSONObject();
+                property.put(ele.getName(), ele.getStringValue());
+                properties.add(property);
+                
             }
             _row.setProperties(properties);//装载属性
             list_row.add(_row);

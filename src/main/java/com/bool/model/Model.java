@@ -10,7 +10,6 @@ import net.sf.json.JSONArray;
  */
 public class Model
 {
-    private int id;
     private String modelName;
     private JSONArray properties;//the properties of mdoel
     private String source;//souce for replace
@@ -18,19 +17,11 @@ public class Model
     public Model() {
     }
 
-    public Model(int id, String modelName, JSONArray properties, String source) {
-        this.id = id;
+
+    public Model(String modelName, JSONArray properties, String source) {
         this.modelName = modelName;
         this.properties = properties;
         this.source = source;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getModelName() {
@@ -57,11 +48,6 @@ public class Model
         this.source = source;
     }
 
-    public Model id(int id) {
-        this.id = id;
-        return this;
-    }
-
     public Model modelName(String modelName) {
         this.modelName = modelName;
         return this;
@@ -85,24 +71,21 @@ public class Model
             return false;
         }
         Model model = (Model) o;
-        return id == model.id && Objects.equals(modelName, model.modelName) && Objects.equals(properties, model.properties) && Objects.equals(source, model.source);
+        return Objects.equals(modelName, model.modelName) && Objects.equals(properties, model.properties) && Objects.equals(source, model.source);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, modelName, properties, source);
+        return Objects.hash(modelName, properties, source);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " id='" + getId() + "'" +
-            ", modelName='" + getModelName() + "'" +
+            " modelName='" + getModelName() + "'" +
             ", properties='" + getProperties() + "'" +
             ", source='" + getSource() + "'" +
             "}";
     }
-
-
 
 }

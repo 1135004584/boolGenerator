@@ -8,6 +8,9 @@ import com.bool.model.Model;
 import com.bool.model.Output;
 import com.bool.model.Row;
 import com.bool.utils.CommonUtil;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 public class CompileController {
 
     public static Map<String, List<Model>> modelsMap = CommonData.modelsMap;
@@ -93,18 +96,30 @@ public class CompileController {
     }
 
     private String getRetByIf(Row row) {
+
         return null;
     }
 
     private String getRetByVar(Row row) {
+
         return null;
     }
 
     private String getRetByAppend(Row row) {
+
         return null;
     }
 
     private String getRetByRow(Row row) {
+        JSONArray properties = row.getProperties();
+        JSONObject property;
+        for(int i=0;i<properties.size();i++)
+        {
+            property = properties.getJSONObject(i);
+            
+
+        }
+
         return null;
     }
 }
