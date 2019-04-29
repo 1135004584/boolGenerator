@@ -2,5 +2,6 @@ com\bool\Generator\model\Row.class
 com\bool\Generator\utils\CommonUtil.class
 com\bool\Generator\model\Model.class
 com\bool\Generator\CodeGenerator.class
+com\bool\Generator\model\Output.class
 com\bool\Generator\Main.class
 com\bool\Generator\interfaces\ICodeGenerator.class

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.bool.Generator.interfaces.ICodeGenerator;
 import com.bool.Generator.model.Model;
+import com.bool.Generator.model.Output;
 import com.bool.Generator.model.Row;
 import com.bool.Generator.utils.*;
 
@@ -36,7 +37,7 @@ public class CodeGenerator implements ICodeGenerator{
     private static Map<String, List<Object>> rowsMaps = new HashMap<>();
 
 
-    private static List<>
+    private static List<Output> outputsList = new ArrayList<>();
     // 装载所有模型文件
     /**
      * 会对path目录下的所有.xml进行装载,可以递归搜索
@@ -185,6 +186,7 @@ public class CodeGenerator implements ICodeGenerator{
      return modelList;
  }
 
+
  //加载行文件，包括:row、append、var、if
  //所有都是row
  private Row loadRow(Element e)
@@ -293,13 +295,54 @@ public class CodeGenerator implements ICodeGenerator{
         List<Model> ModelList;
         System.out.println();
         for (String xmlPath : xmlPathList) {
-            modelsMap.put(getTempletName(xmlPath),loadRowslList(xmlPath));
+            outputsList.addAll(loadOutputList(xmlPath));
             System.out.println("load -> "+xmlPath);
         }
 
         System.out.println("装载输出文件成功!");
         System.out.println();
     }
+
+
+
+
+    private Output loadOutput(Element e)
+    {
+        Output output = new Output();
+        List<String> rowsRef = new ArrayList<>();
+
+        for(Element ele:(List<Element>)e.elements("page"))
+        {
+            rowsRef.add(ele.attributeValue("rowsRef"));
+        }
+        output.setRowsRef(rowsRef);
+        output.setOutputPath(e.getStringValue());
+        return output;
+    }
+
+    /**
+     * 解析单个的output xml文件
+     * 
+     * @param path
+     * @return
+     * @throws Exception
+     */
+    private List<Output> loadOutputList(String path) throws Exception
+    {
+        List<Output> outputList = new ArrayList();
+        File file = new File(path);
+        if(!file.exists())//如果找不到模型文件
+            throw new Exception("model file not found!");
+        
+        Document doc = new SAXReader().read(file);
+        Element element = doc.getRootElement();
+        List<Element> list = element.elements();
+        
+        for(Element e:list)
+        {
+            outputList.add(loadOutput(e));//装载row的组件(row、append、var、if)
+        }
+        
+        return outputList;
+    }
 }
-
-

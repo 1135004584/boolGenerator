@@ -9,15 +9,9 @@ public class Main {
         try {
             codeGenerator.loadAllTemplet("templet/");
             codeGenerator.loadAllRows("rows/");
+            codeGenerator.loadAllOutput("output/");
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        // try {
-        //     codeGenerator.loadTemplet("templet/layui.xml");
-        // } catch (Exception e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
-        // }
     }
 }
