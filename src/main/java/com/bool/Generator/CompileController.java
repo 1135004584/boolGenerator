@@ -74,6 +74,7 @@ public class CompileController {
         return null;
     }
 
+    //获取ref的后缀在output文件中查找
     private String getSuffixByOutput(String ref) {
         for(Output output:outputsList)
         {
@@ -116,7 +117,7 @@ public class CompileController {
         for(int i=0;i<properties.size();i++)
         {
             property = properties.getJSONObject(i);
-            
+
 
         }
 
