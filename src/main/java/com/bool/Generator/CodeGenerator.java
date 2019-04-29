@@ -96,6 +96,10 @@ public class CodeGenerator implements ICodeGenerator{
         File file = new File(path);
         Document doc = new SAXReader().read(file);
         Element element = doc.getRootElement();
+        if("".equals(element.attribute("name").getValue()))
+        {
+            return element.getName();
+        }
         return element.attribute("name").getValue();
     }
 
@@ -118,7 +122,7 @@ public class CodeGenerator implements ICodeGenerator{
     //开始生成所有文件
     public void startGenerateAllFile()
     {
-        
+
     }
  
 }
