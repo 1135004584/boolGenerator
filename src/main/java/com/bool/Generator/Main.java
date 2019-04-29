@@ -8,6 +8,7 @@ public class Main {
         CodeGenerator codeGenerator = new CodeGenerator();
         try {
             codeGenerator.loadAllTemplet("templet/");
+            codeGenerator.loadAllRows("rows/");
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

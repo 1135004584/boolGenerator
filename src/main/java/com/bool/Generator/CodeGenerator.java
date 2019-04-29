@@ -35,6 +35,8 @@ public class CodeGenerator implements ICodeGenerator{
      */
     private static Map<String, List<Object>> rowsMaps = new HashMap<>();
 
+
+    private static List<>
     // 装载所有模型文件
     /**
      * 会对path目录下的所有.xml进行装载,可以递归搜索
@@ -156,7 +158,7 @@ public class CodeGenerator implements ICodeGenerator{
         }
 
 
-        System.out.println("装载所有模型成功!");
+        System.out.println("装载所有row文件成功!");
         System.out.println();
     }
 
@@ -190,18 +192,37 @@ public class CodeGenerator implements ICodeGenerator{
 
      Row row = new Row();
      Row _row = row;
-     List<Element> list_ele_temp = new ArrayList<>();
-     List<Row> list_row;
+     List<Element> list_father = new ArrayList<>();//父容器
+     List<List<Element>> list_child = new ArrayList<>();//子元素容器
+
+     list_father.add(e);
+     Row parentRow = row;
+     Element element;
      int i;
-     list_ele_temp.add(e);
-     
-     for(Element ele:list_ele_temp)
+     for(i=0;i<list_father.size();i++)//遍历父元素节点
      {
-         
-        list_row = new ArrayList<>();
-        
+        element = list_father.get(i);
+        loadRowProperties(row,element);//加载row的属性
+        List<Element> list = new ArrayList<>();
+        for(Element _ele : (List<Element>)element.elements())
+        {
+            list.add(_ele);
+        }
+        list_child.add(list);
+
+        if(element == list_father.get(list_father.size()-1))//如果是最后一个元素，则表明当前父节点已经全部遍历，需要跳到下一级节点
+        {
+            list_father.clear();//清空
+            list_father = list_child.get(i);
+            i=0;
+            if(row.getChildRow()!=null)
+                row = row.getChildRow().get(0);
+        }else{//跳到下一个节点
+            row = parentRow.getChildRow().get(i);   
+        }
      }
 
+     
      return _row;
  }
 
@@ -257,6 +278,28 @@ public class CodeGenerator implements ICodeGenerator{
         row.setChildRow(list_row);//设置子元素
     }
  }
+
+
+    /**
+     * 加载所有的输出文件
+     */
+    @Override
+    public void loadAllOutput(String path) throws Exception {
+        File file = new File(path);
+        if (!file.isDirectory())// 如果不是目录
+            throw new Exception("path is not a directory!!");
+
+        List<String> xmlPathList = CommonUtil.getAllFilePathsByPath(path);
+        List<Model> ModelList;
+        System.out.println();
+        for (String xmlPath : xmlPathList) {
+            modelsMap.put(getTempletName(xmlPath),loadRowslList(xmlPath));
+            System.out.println("load -> "+xmlPath);
+        }
+
+        System.out.println("装载输出文件成功!");
+        System.out.println();
+    }
 }
 
 

@@ -30,8 +30,8 @@ public class CommonUtil{
         {
             if(f.isDirectory())//如果是目录进行递归搜索
             {
-                getPath(file.getAbsolutePath(),pathList);
-            }else{
+                getPath(f.getAbsolutePath(),pathList);
+            }else{   
                 pathList.add(f.getAbsolutePath());
             }
         }

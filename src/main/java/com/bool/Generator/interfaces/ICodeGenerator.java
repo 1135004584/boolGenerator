@@ -15,4 +15,12 @@ public interface ICodeGenerator{
      * @throws Exception
      */
     public void loadAllRows(String path) throws Exception;
+
+    /**
+     * 加载所有的输出文件
+     * @param path
+     * @throws Exception
+     */
+    public void loadAllOutput(String path) throws Exception;
+
 }
