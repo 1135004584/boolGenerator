@@ -8,7 +8,11 @@
 
     <!-- $${child} 表示可递归嵌入 -->
     <row ref="div" id="3">
-        <row ref="div"></row>
+        <row ref="div">
+            <!-- 附加 -->
+            <append>
+            </append>        
+        </row>
         <row ref="div"></row>
     </row>
 

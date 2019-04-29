@@ -184,66 +184,78 @@ public class CodeGenerator implements ICodeGenerator{
  }
 
  //加载行文件，包括:row、append、var、if
+ //所有都是row
  private Row loadRow(Element e)
  {
-     Row row = null;
 
-    if("row".equals(e.getName()))//row要考虑递归结构
+     Row row = new Row();
+     Row _row = row;
+     List<Element> list_ele_temp = new ArrayList<>();
+     List<Row> list_row;
+     int i;
+     list_ele_temp.add(e);
+     
+     for(Element ele:list_ele_temp)
+     {
+         
+        list_row = new ArrayList<>();
+        
+     }
+
+     return _row;
+ }
+
+ /**
+  * 设置row的属性
+  * @param row
+  * @param e
+  */
+ private void loadRowProperties(Row row,Element e)
+ {
+    row.setName(e.getName());//装载row名,包括:row、append、var、if
+    List<Attribute> listAttr = e.attributes();
+    JSONArray properties = new JSONArray();
+    JSONObject property;
+    for(Attribute attr:listAttr)
     {
-        List<Attribute> listAttr;
-        int i;
-        JSONArray jsonattrProperties;
-        JSONObject jsonProperty;
-        jsonattrProperties = new JSONArray();
-        listAttr = e.attributes();
-
-        row = new Row();
-
-        for(Attribute attr : listAttr)//设置row的属性
+        if("id".equals(attr.getName()))
         {
-            if("id".equals(attr.getName()))//设置row的id
-            {
-                row.setId(Integer.parseInt(attr.getStringValue()));
-            }else if("ref".equals(attr.getName()))//设置row的ref
-            {
-                row.setRef(attr.getStringValue());
-            }else
-            {
-                jsonProperty = new JSONObject();
-                jsonProperty.put(attr.getName(), attr.getStringValue());
-                jsonattrProperties.add(jsonProperty);
-            }
+            row.setId(Integer.parseInt(attr.getValue()));
+        }else{
+            property = new JSONObject();
+            property.put(e.getName(), e.getStringValue());
+            properties.add(property);
         }
-        row.setProperties(jsonattrProperties);
-
-
-        //考虑多层嵌套结构
-
-        List<Element> listEle = e.elements("row");
-        List<Row> listRow;
-        Row _row;
-        while(listEle.size() != 0)
-        {
-            
-            
-        }
-
-
-    }else if("append".equals(e.getName()))
-    {
-        row = new Row();
-
-    }else if("var".equals(e.getName()))
-    {
-        row = new Row();
-
-    }else if("if".equals(e.getName()))
-    {
-        row = new Row();
-
     }
+    row.setProperties(properties);//装载属性
 
-    return row;
+    List<Element> list_ele = e.elements();
+    if(list_ele.size()!=0)//如果有嵌套的情况
+    {
+        List<Row> list_row = new ArrayList<>();
+        Row _row;
+        for(Element ele:list_ele)
+        {
+            _row = new Row();
+            _row.setName(ele.getName());//装载row名,包括:row、append、var、if
+            listAttr = ele.attributes();
+            properties = new JSONArray();
+            for(Attribute attr:listAttr)
+            {
+                if("id".equals(attr.getName()))
+                {
+                    _row.setId(Integer.parseInt(attr.getValue()));
+                }else{
+                    property = new JSONObject();
+                    property.put(ele.getName(), ele.getStringValue());
+                    properties.add(property);
+                }
+            }
+            _row.setProperties(properties);//装载属性
+            list_row.add(_row);
+        }
+        row.setChildRow(list_row);//设置子元素
+    }
  }
 }
 
